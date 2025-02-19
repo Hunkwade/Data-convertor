@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raskbind Coffee Order</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        .order-container {
+            background: #ffcf2d;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: left;
+            position: relative;
+        }
+        h2 {
+            color: #333;
+            font-size: 22px;
+        }
+        .order-details {
+            font-size: 16px;
+            margin-top: 10px;
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+        textarea {
+            width: 100%;
+            height: 120px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        button {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #b71c1c;
+        }
+        .copy-button {
+            display: block;
+            margin: 15px auto 0;
+            width: 100%;
+            max-width: 200px;
+        }
+        @media (max-width: 600px) {
+            .order-container {
+                padding: 15px;
+                width: 90%;
+            }
+            h2 {
+                font-size: 20px;
+            }
+            .order-details {
+                font-size: 14px;
+            }
+            .thanks {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Paste Your Order Data Below</h2>
+        <textarea id="inputData" placeholder="Paste your data here..."></textarea>
+        <div class="button-group">
+            <button onclick="processData()">Generate</button>
+            <button onclick="clearData()">Clear</button>
+        </div>
+    </div>
+    
+    <div class="order-container" id="orderContainer" style="display:none;">
+        <div class="order-details" id="orderDetails"></div>
+        <button class="copy-button" onclick="copyOrder()">Copy Order</button>
+    </div>
+
+    <script>
+        function processData() {
+            let inputData = document.getElementById("inputData").value.split('\n').map(line => line.trim()).filter(line => line !== "");
+
+            if (inputData.length < 12) {
+                alert("Invalid input format. Please ensure all fields are included.");
+                return;
+            }
+
+            function cleanData(line) {
+                return line.replace(/^🔹\s*/, "").trim();
+            }
+
+            const orderData = {
+                name: cleanData(inputData[1] || "N/A"),
+                email: cleanData(inputData[2] || "N/A"),
+                phone: cleanData(inputData[3] || "N/A"),
+                address: cleanData(inputData[4] || "N/A"),
+                coffee: cleanData(inputData[5] || "N/A"),
+                quantity: cleanData(inputData[6] || "N/A"),
+                size: cleanData(inputData[7] || "N/A"),
+                price: cleanData(inputData[8] || "N/A"),
+                temperature: cleanData(inputData[9] || "N/A"),
+                dateTime: cleanData(inputData[10] || "N/A"),
+                orderId: cleanData(inputData[11] || "N/A"),
+                requirement: inputData[12] && inputData[12] !== "undefined" ? cleanData(inputData[12]) : "No special requirements"
+            };
+
+            document.getElementById("orderDetails").innerHTML = `📜 Your Raskbind Coffee Order 📜\n
+                🍪 Name - ${orderData.name}
+                🥨 Phone no - ${orderData.phone}
+                🍪 Address - ${orderData.address}
+                🥨 Coffee - ${orderData.coffee}
+                🍪 Quantity - ${orderData.quantity}
+                🥨 Your Size - ${orderData.size}
+                🍪 Temperature - ${orderData.temperature}
+                🥨 Order ID - ${orderData.orderId}
+                🍪 Requirement - ${orderData.requirement}
+                ${orderData.requirement !== "No special requirements" ? `🥨 Total Price - ${orderData.price}\n` : ''}
+                🍁 Thank you for choosing Raskbind Coffee! Enjoy your brew. ☕✨`;
+
+            document.getElementById("orderContainer").style.display = "block";
+        }
+
+        function clearData() {
+            document.getElementById("inputData").value = "";
+            document.getElementById("orderContainer").style.display = "none";
+        }
+
+        function copyOrder() {
+            const orderText = document.getElementById("orderDetails").innerText;
+            navigator.clipboard.writeText(orderText).then(() => {
+                alert("Order copied to clipboard!");
+            }).catch(err => {
+                console.error("Failed to copy: ", err);
+            });
+        }
+    </script>
+</body>
+</html>
