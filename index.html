@@ -131,17 +131,16 @@
             };
 
             document.getElementById("orderDetails").innerHTML = `📜 Your Raskbind Coffee Order 📜\n
-                🍪 Name - ${orderData.name}
-                🥨 Phone no - ${orderData.phone}
-                🍪 Address - ${orderData.address}
-                🥨 Coffee - ${orderData.coffee}
-                🍪 Quantity - ${orderData.quantity}
-                🥨 Your Size - ${orderData.size}
-                🍪 Temperature - ${orderData.temperature}
-                🥨 Order ID - ${orderData.orderId}
-                🍪 Requirement - ${orderData.requirement}
-                ${orderData.requirement !== "No special requirements" ? `🥨 Total Price - ${orderData.price}\n` : ''}
-                🍁 Thank you for choosing Raskbind Coffee! Enjoy your brew. ☕✨`;
+                Name - ${orderData.name}
+                Phone no - ${orderData.phone}
+                Address - ${orderData.address}
+                Coffee - ${orderData.coffee}
+                Your Size - ${orderData.size}
+                Temperature - ${orderData.temperature}
+                Order ID - ${orderData.orderId}
+                Requirement - ${orderData.requirement}
+                ${orderData.requirement !== "No special requirements" ? `Total Price - ${orderData.price}\n` : ''}
+                🍁 Thank you for choosing Raskbind Coffee! Enjoy your brew. ☕✨\n \n Your order will be delivered within 30 minutes! If you have any questions or need assistance, feel free to contact our team at +91 75491-13544 or email us at raskbind@gmail.com.`;
 
             document.getElementById("orderContainer").style.display = "block";
         }
